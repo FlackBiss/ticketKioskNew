@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:views="clr-namespace:CustomKeyboard.Views;assembly=CustomKeyboard"
+                    xmlns:controls="clr-namespace:CustomKeyboard.Views.Controls;assembly=CustomKeyboard">
+    <Style TargetType="{x:Type controls:KeyboardKeyButton}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="HighlightedBackground" Value="{DynamicResource MainFillBrush}" />
+        <Setter Property="HighlightedForeground" Value="White" />
+        <Setter Property="FontFamily" Value="{DynamicResource InterFontFamily}" />
+        <Setter Property="Effect" Value="{x:Null}" />
+        <Setter Property="Background" Value="{StaticResource MicroForegroundBrush}"/>
+        <Setter Property="Margin" Value="-2" />
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="{x:Type views:KeyboardControl}">
+        <Setter Property="KeyBaseHeight" Value="48"/>
+        <Setter Property="KeyBaseWidth" Value="48"/>
+    </Style>
+</ResourceDictionary>

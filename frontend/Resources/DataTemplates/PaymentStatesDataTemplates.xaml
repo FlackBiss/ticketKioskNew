@@ -1,0 +1,181 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:popups="clr-namespace:Lastik.ViewModels.Popups">
+    <DataTemplate DataType="{x:Type popups:PaymentPopupViewModel}"
+                  x:Key="ProcessingTemplate">
+        <StackPanel>
+            <Border
+                CornerRadius="40 40 0 0"
+                Height="828">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="../../Resources/Images/Card.jfif"
+                        Stretch="UniformToFill"/>
+                </Border.Background>
+            </Border>
+            <ContentPresenter ContentTemplate="{StaticResource CartIcon}"
+                              Width="183"
+                              Margin="0 90"/>
+            <TextBlock HorizontalAlignment="Center"
+                       FontSize="120">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource HeaderTextStyle}"
+                           TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Cart.PaymentType}"
+                                         Value="CashValidator">
+                                <Setter Property="Text"
+                                        Value="ОПЛАТА НАЛИЧНЫМИ"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Cart.PaymentType}"
+                                         Value="Sberbank">
+                                <Setter Property="Text"
+                                        Value="ОПЛАТА КАРТОЙ"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       Width="500"
+                       Margin="0 16 0 82">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource MicroTextStyle}"
+                           TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Cart.PaymentType}"
+                                         Value="CashValidator">
+                                <Setter Property="Text"
+                                        Value="Внесите наличные"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Cart.PaymentType}"
+                                         Value="Sberbank">
+                                <Setter Property="Text"
+                                        Value="Следуйте инструкциям на терминале"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Border
+                Width="1022"
+                Height="265"
+                CornerRadius="16"
+                Background="{StaticResource PrimaryBackgroundBrush}">
+                <StackPanel Orientation="Vertical"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="40 20">
+                    <TextBlock VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Margin="0 0 60 0">
+                        <TextBlock.Style>
+                            <Style BasedOn="{StaticResource MicroTextStyle}"
+                                   TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Cart.PaymentType}"
+                                                 Value="CashValidator">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Cart.PaymentType}"
+                                                 Value="Sberbank">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        <Run Text="внесено:"
+                             Style="{StaticResource HeaderRunStyle}"/>
+                        <Run Text="{Binding PartPayment,StringFormat=C0,ConverterCulture=Ru-ru}"
+                             Style="{StaticResource HeaderRunStyle}"/>
+                    </TextBlock>
+
+                    <TextBlock VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource MicroTextStyle}"
+                               Margin="0 0 60 0">
+                        <Run Text="к оплате:"
+                             Style="{StaticResource HeaderRunStyle}"/>
+                        <Run Text="{Binding Cart.TotalPrice,StringFormat=C0,ConverterCulture=Ru-ru}"
+                             Style="{StaticResource HeaderRunStyle}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+            <Button Content="Отменить"
+                    HorizontalAlignment="Center"
+                    Template="{StaticResource LinkButton}"
+                    Margin="0 82 0 0"
+                    Command="{Binding CloseContainerCommand}"/>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type popups:PaymentPopupViewModel}"
+                  x:Key="SuccessTemplate">
+        <StackPanel>
+            <Border
+                CornerRadius="40 40 0 0"
+                Height="1047">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="../../Resources/Images/hall.jfif"
+                        Stretch="UniformToFill"/>
+                </Border.Background>
+            </Border>
+            <ContentPresenter ContentTemplate="{StaticResource PaymentSuccessIcon}"
+                              Width="183"
+                              Margin="0 160 0 80"/>
+            <TextBlock Text="НЕ ЗАБУДЬТЕ ЗАБРАТЬ ЧЕК"
+                       HorizontalAlignment="Center"
+                       Style="{StaticResource HeaderTextStyle}"
+                       FontSize="110"/>
+            <TextBlock Text="Заберите чек и используйте его в качестве входного билета"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       Style="{StaticResource MicroTextStyle}"
+                       Width="700"
+                       Margin="0 16 0 82"/>
+            <Button Content="Закрыть"
+                    HorizontalAlignment="Center"
+                    Template="{StaticResource LinkButton}"
+                    Margin="0 82 0 0"
+                    Command="{Binding CloseContainerCommand}"/>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type popups:PaymentPopupViewModel}"
+                  x:Key="FailTemplate">
+        <StackPanel>
+            <Border
+                CornerRadius="40 40 0 0"
+                Height="1047">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="../../Resources/Images/redSeats.jfif"
+                        Stretch="UniformToFill"/>
+                </Border.Background>
+            </Border>
+            <ContentPresenter ContentTemplate="{StaticResource PaymentFailIcon}"
+                              Width="183"
+                              Margin="0 90"/>
+            <TextBlock Text="ОПЛАТА НЕ ПРОШЛА"
+                       HorizontalAlignment="Center"
+                       Style="{StaticResource HeaderTextStyle}"
+                       FontSize="120"/>
+            <TextBlock Text="Вернитесь назад и попробуйте еще раз"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       Style="{StaticResource MicroTextStyle}"
+                       Width="500"
+                       Margin="0 16 0 82"/>
+            <Button Content="НАЗАД"
+                    HorizontalAlignment="Center"
+                    Width="923"
+                    FontSize="60"
+                    Height="166"
+                    Template="{StaticResource MainButtonTemplate}"
+                    Margin="0 82 0 0"
+                    Command="{Binding CloseContainerCommand}"/>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

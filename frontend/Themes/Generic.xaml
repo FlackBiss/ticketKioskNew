@@ -1,0 +1,97 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Lastik.Views.Controls"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                    xmlns:popups="clr-namespace:Lastik.ViewModels.Popups"
+                    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:popupContainers="clr-namespace:Lastik.Views.Popups.PopupContainers"
+                    xmlns:controls1="clr-namespace:Lastik.Views.Popups"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:components="clr-namespace:Lastik.Views.Components"
+                    mc:Ignorable="d">
+    <PowerEase x:Key="PowerEase"
+               Power="2"
+               EasingMode="EaseInOut"/>
+
+    <Style TargetType="{x:Type components:ModalControl}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="Black"
+                                 Opacity="0"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BackgroundOpacity" Value="0.5"/>
+        <Setter Property="OpenCloseDuration" Value="0:0:0.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type components:ModalControl}">
+                    <Grid Background="{TemplateBinding Background}" Visibility="{TemplateBinding Visibility}">
+                        <ContentControl Content="{TemplateBinding Content}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type popupContainers:DropUpContainer}">
+        <Setter Property="Duration" Value="0:0:0.5"/>
+        <Setter Property="EasingFunction" Value="{DynamicResource PowerEase}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="popupContainers:DropUpContainer">
+                    <ContentControl d:DataContext="{d:DesignInstance popups:BasePopupViewModel}"
+                                    Content="{TemplateBinding Content}">
+                        <b:Interaction.Triggers>
+                            <b:DataTrigger Binding="{Binding ToClose}" Value="True">
+                                <b:CallMethodAction
+                                    TargetObject="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=popupContainers:DropUpContainer}}"
+                                    MethodName="Close"/>
+                            </b:DataTrigger>
+                            <b:DataTrigger Binding="{Binding ToCloseWithModal}" Value="True">
+                                <b:CallMethodAction
+                                    TargetObject="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=popupContainers:DropUpContainer}}"
+                                    MethodName="Close"/>
+                            </b:DataTrigger>
+                            <b:EventTrigger EventName="Closed"
+                                            SourceObject="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=popupContainers:DropUpContainer}}">
+                                <b:InvokeCommandAction
+                                    Command="{Binding CloseCommand}"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </ContentControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type popupContainers:ScaleContainer}">
+        <Setter Property="Duration" Value="0:0:0.5"/>
+        <Setter Property="EasingFunction" Value="{DynamicResource PowerEase}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="popupContainers:ScaleContainer">
+                    <ContentControl d:DataContext="{d:DesignInstance popups:BasePopupViewModel}"
+                                    Content="{TemplateBinding Content}">
+                        <b:Interaction.Triggers>
+                            <b:DataTrigger Binding="{Binding ToClose}" Value="True">
+                                <b:CallMethodAction
+                                    TargetObject="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=popupContainers:ScaleContainer}}"
+                                    MethodName="Close"/>
+                            </b:DataTrigger>
+                            <b:DataTrigger Binding="{Binding ToCloseWithModal}" Value="True">
+                                <b:CallMethodAction
+                                    TargetObject="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=popupContainers:ScaleContainer}}"
+                                    MethodName="Close"/>
+                            </b:DataTrigger>
+                            <b:EventTrigger EventName="Closed"
+                                            SourceObject="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=popupContainers:ScaleContainer}}">
+                                <b:InvokeCommandAction
+                                    Command="{Binding CloseCommand}"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </ContentControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

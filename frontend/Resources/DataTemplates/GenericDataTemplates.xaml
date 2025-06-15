@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Lastik.ViewModels.Controls"
+                    xmlns:controls1="clr-namespace:Lastik.Views.Controls"
+                    xmlns:hallGeometry="clr-namespace:Lastik.ViewModels.HallGeometry"
+                    xmlns:converters="clr-namespace:Lastik.Converters"
+                    xmlns:entities="clr-namespace:Lastik.Models.Schedules.Entities"
+                    xmlns:new="clr-namespace:Lastik.Models.Geometry.Entities.New"
+                    xmlns:new1="clr-namespace:Lastik.Models.Cart.Entities">
+
+    <DataTemplate DataType="{x:Type new:SchemeDataJson}">
+        <DataTemplate.Resources>
+            <converters:RgbColorListToBrushConverter x:Key="ColorListToBrushConverter" />
+        </DataTemplate.Resources>
+        <Border Width="575"
+                Height="116"
+                CornerRadius="24"
+                Background="{DynamicResource PrimaryBackgroundBrush}">
+            <StackPanel Orientation="Horizontal"
+                        Margin="35 19">
+                <Ellipse Width="40"
+                         Height="40"
+                         Fill="{Binding Color}" />
+                <TextBlock
+                    Margin="24 0"
+                    Style="{DynamicResource DefaultTextStyle}"
+                    Foreground="{DynamicResource MainFillBrush}"
+                    VerticalAlignment="Center"
+                    Width="410">
+                    <Run Text="{Binding Name, StringFormat='{}{0} –'}"></Run>
+                    <Run Text="{Binding Section, StringFormat='{}{0}, '}" />
+                    <Run Text="{Binding Row, StringFormat='{}{0} ряд, '}" />
+                    <Run Text="{Binding SeatNumber, StringFormat='{}{0} место'}" />
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+</ResourceDictionary>
