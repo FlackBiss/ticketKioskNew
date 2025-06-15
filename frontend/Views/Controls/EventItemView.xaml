@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="Lastik.Views.Controls.EventItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:helpers="clr-namespace:Lastik.Helpers"
+             xmlns:controls1="clr-namespace:Lastik.ViewModels.Controls"
+             xmlns:components="clr-namespace:MapControlLib.Components;assembly=MapControlLib"
+             mc:Ignorable="d"
+             d:DesignWidth="933"
+             d:DataContext="{d:DesignInstance controls1:EventItemViewModel}">
+    <Button
+        Style="{StaticResource FadeLoadControlStyle}"
+        Command="{Binding ToDetailsCommand}">
+        <Button.Template>
+            <ControlTemplate TargetType="Button">
+                <StackPanel Background="Transparent"
+                            Width="933">
+
+                    <Border Height="511"
+                            CornerRadius="40"
+                            Background="LightGray">
+                        <components:AsyncImage
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            ImageSource="{Binding Item.ImagePath}"
+                            Stretch="Uniform">
+                            <components:AsyncImage.Clip>
+                                <RectangleGeometry Rect="0 0 933 511"
+                                                   RadiusX="40"
+                                                   RadiusY="40" />
+                            </components:AsyncImage.Clip>
+                        </components:AsyncImage>
+                    </Border>
+
+                    <StackPanel Height="326">
+                        <WrapPanel Margin="0 22"
+                                   Visibility="{Binding Item.IsHaveTickets, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                   Orientation="Horizontal">
+                            <WrapPanel.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextStyle}">
+                                    <Setter Property="MaxWidth" Value="933" />
+                                    <Setter Property="Foreground" Value="{StaticResource ThirdForegroundBrush}" />
+                                </Style>
+                                <Style TargetType="Ellipse">
+                                    <Setter Property="Width" Value="13" />
+                                    <Setter Property="Height" Value="13" />
+                                    <Setter Property="Margin" Value="20 0" />
+                                    <Setter Property="Fill" Value="{StaticResource ThirdForegroundBrush}" />
+                                </Style>
+                            </WrapPanel.Resources>
+                            <TextBlock Text="{Binding Item.Hall.Name, StringFormat='{}{0} • '}" >
+                            </TextBlock>
+                            <TextBlock Text="{Binding Item.DateTimeAt,StringFormat=HH:mm}" />
+                        </WrapPanel>
+
+                        <TextBlock Text="{Binding Item.Title}"
+                                   HorizontalAlignment="Left"
+                                   Margin="0 22"
+                                   Width="923"
+                                   TextTrimming="WordEllipsis">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource HeaderTextStyle}">
+                                    <Setter Property="MaxHeight" Value="198" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Item.Description}"
+                                                     Value="{x:Null}">
+                                            <Setter Property="MaxHeight" Value="300" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock helpers:RichTextBoxHelper.HtmlText="{Binding Item.ShortDescription}"
+                                   Style="{StaticResource DescriptionTextStyle}"
+                                   Width="933"
+                                   MaxHeight="156" />
+                    </StackPanel>
+                    <Grid Margin="0 22 153 0"
+                          Visibility="{Binding Item.IsHaveTickets, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock HorizontalAlignment="Left"
+                                   Style="{StaticResource HeaderTextStyle}">
+                            <Run Text="от" />
+                            <Run Text="{Binding Item.StartPrice,StringFormat=C0,ConverterCulture=ru-Ru}" />
+                        </TextBlock>
+                        <Border CornerRadius="12"
+                                Name="Border"
+                                Background="{StaticResource MainFillBrush}"
+                                Width="362"
+                                HorizontalAlignment="Right"
+                                Height="{TemplateBinding Height}">
+                            <TextBlock Style="{StaticResource ButtonTextStyle}"
+                                       Text="КУПИТЬ БИЛЕТ"
+                                       FontSize="32"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       TextWrapping="Wrap" />
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </ControlTemplate>
+        </Button.Template>
+
+    </Button>
+</UserControl>

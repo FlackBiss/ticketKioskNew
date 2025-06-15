@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Lastik.Views.Controls.Clock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Lastik.Views.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance local:Clock}">
+    <UserControl.Resources>
+        <Style TargetType="Border" x:Key="MainBorder">
+            <Setter Property="Margin" Value="11 0"></Setter>
+            <Setter Property="Width" Value="84"/>
+            <Setter Property="Height" Value="102"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Background" Value="#F7F4F4"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="MainText" BasedOn="{StaticResource HeaderTextStyle}">
+            <Setter Property="FontSize" Value="48"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel
+        Orientation="Horizontal">
+        <Border
+            Style="{StaticResource MainBorder}">
+            <TextBlock Style="{StaticResource MainText}"
+                       Name="DecadeMinutes"/>
+        </Border>
+        <Border
+            Style="{StaticResource MainBorder}">
+            <TextBlock Style="{StaticResource MainText}"
+                       Name="Minutes"/>
+        </Border>
+        <TextBlock Style="{StaticResource MainText}"
+                   Text=":"/>
+        <Border
+            Style="{StaticResource MainBorder}">
+            <TextBlock Style="{StaticResource MainText}"
+                       Name="DecadeSeconds"/>
+        </Border>
+        <Border
+                Style="{StaticResource MainBorder}">
+            <TextBlock Style="{StaticResource MainText}"
+                       Name="Seconds"/>
+        </Border>
+    </StackPanel>
+</UserControl>

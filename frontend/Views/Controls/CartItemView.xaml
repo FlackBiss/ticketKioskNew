@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Lastik.Views.Controls.CartItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:entities="clr-namespace:Lastik.Models.Cart.Entities"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance entities:CartItem}">
+    <Grid>
+        <!--<Border Width="875"
+                Height="156"
+                CornerRadius="24"
+                Background="{DynamicResource PrimaryBackgroundBrush}">
+            <Grid Margin="0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        Template="{StaticResource IncreaseButtonTemplate}"
+                        Content="{StaticResource MinusIcon}"
+                        Command="{Binding DecreaseCommand}"
+                        CommandParameter="{Binding}"
+                        Width="100"
+                        Height="100">
+                </Button>
+
+                <TextBlock Grid.Column="1"
+                           Text="{Binding Name}"
+                           Margin="24 0"
+                           Style="{DynamicResource DefaultTextStyle}"
+                           Foreground="{DynamicResource MainFillBrush}"
+                           VerticalAlignment="Center"
+                           Width="510">
+                </TextBlock>
+
+                <Button Grid.Column="2"
+                        Template="{StaticResource IncreaseButtonTemplate}"
+                        Content="{StaticResource PlusIcon}"
+                        Command="{Binding IncreaseCommand}"
+                        CommandParameter="{Binding}"
+                        Width="100"
+                        Height="100">
+                </Button>
+            </Grid>
+        </Border>-->
+    </Grid>
+</UserControl>

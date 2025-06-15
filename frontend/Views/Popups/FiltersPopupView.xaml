@@ -1,0 +1,154 @@
+﻿<UserControl x:Class="Lastik.Views.Popups.FiltersPopupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lastik.Views.Popups"
+             xmlns:popupContainers="clr-namespace:Lastik.Views.Popups.PopupContainers"
+             xmlns:popups="clr-namespace:Lastik.ViewModels.Popups"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:controls="clr-namespace:Lastik.Views.Controls"
+             xmlns:helpers="clr-namespace:Lastik.Helpers"
+             mc:Ignorable="d"
+             Width="1940"
+             Height="1853"
+             d:DataContext="{d:DesignInstance popups:FiltersPopupViewModel}"
+             VerticalAlignment="Bottom">
+    <b:Interaction.Triggers>
+        <b:DataTrigger Binding="{Binding ToClose}" Value="True">
+            <b:CallMethodAction
+                TargetObject="{Binding ElementName=Container}" MethodName="Close" />
+        </b:DataTrigger>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding  LoadedCommand}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <popupContainers:DropUpContainer
+        x:Name="Container">
+        <b:Interaction.Triggers>
+            <b:EventTrigger EventName="Closed">
+                <b:InvokeCommandAction Command="{Binding CloseCommand}" />
+            </b:EventTrigger>
+        </b:Interaction.Triggers>
+        <Border CornerRadius="170 170 0 0"
+                Background="{StaticResource PrimaryBackgroundBrush}">
+            <StackPanel
+                Margin="200 200 200 40">
+                <Grid>
+                    <Button
+                        Panel.ZIndex="1"
+                        Template="{StaticResource CloseButtonTemplate}"
+                        Width="70"
+                        HorizontalAlignment="Right"
+                        Command="{Binding CloseContainerCommand}" />
+                    <TextBlock Style="{StaticResource HeaderTextStyle}"
+                               Text="ФИЛЬТРЫ"
+                               FontSize="130" />
+                </Grid>
+                <Border BorderBrush="{StaticResource MicroForegroundBrush}"
+                        BorderThickness="1" />
+
+                <StackPanel Height="1000">
+                    <StackPanel.Resources>
+                        <Style TargetType="ListBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <ItemsPresenter Width="{TemplateBinding Width}"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="ItemsPanel">
+                                <Setter.Value>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="ItemContainerStyle">
+                                <Setter.Value>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Margin" Value="0 0 23 23"/>
+                                        <Setter Property="Background" Value="{DynamicResource PrimaryForegroundBrush}"/>
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border
+                                                        CornerRadius="8"
+                                                        Background="{TemplateBinding Background}">
+                                                        <ContentPresenter/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Opacity" Value="1"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="ЗАЛ"
+                               Style="{StaticResource HeaderTextStyle}"
+                               Margin="0 62 0 17"/>
+                    <ListBox ItemsSource="{Binding FilterHalls}"
+                             SelectionMode="Multiple"
+                             Background="Transparent"
+                             BorderBrush="Transparent"
+                             Width="1540"
+                             BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"
+                                           Padding="20"
+                                           Style="{DynamicResource HeaderTextStyle}"
+                                           FontSize="48"
+                                           Foreground="{DynamicResource SecondaryForegroundBrush}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <b:Interaction.Behaviors>
+                            <helpers:TagListBoxMultiSelectionBehavior SelectedItems="{Binding SelectedFilterHalls}"/>
+                        </b:Interaction.Behaviors>
+                    </ListBox>
+                    <TextBlock Text="ТИП БИЛЕТОВ"
+                               Style="{StaticResource HeaderTextStyle}"
+                               Margin="0 62 0 17"/>
+                    <ListBox ItemsSource="{Binding FilterTicketTypes}"
+                             SelectionMode="Multiple"
+                             Background="Transparent"
+                             BorderBrush="Transparent"
+                             Width="1540"
+                             BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"
+                                           Padding="20"
+                                           Style="{DynamicResource HeaderTextStyle}"
+                                           FontSize="48"
+                                           Foreground="{DynamicResource SecondaryForegroundBrush}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <b:Interaction.Behaviors>
+                            <helpers:TagListBoxMultiSelectionBehavior SelectedItems="{Binding SelectedFilterTicketTypes}"/>
+                        </b:Interaction.Behaviors>
+                    </ListBox>
+                </StackPanel>
+                <Button Content="ПРИМЕНИТЬ"
+                        Command="{Binding ApplyFiltersCommand}"
+                        Margin="0 150 0 40"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Width="923"
+                        Height="166"
+                        FontSize="80" />
+                <Button Template="{StaticResource LinkButton}"
+                        Content="Сбросить фильтр"
+                        Command="{Binding ClearFiltersCommand}"
+                        HorizontalAlignment="Center" />
+            </StackPanel>
+        </Border>
+    </popupContainers:DropUpContainer>
+</UserControl>

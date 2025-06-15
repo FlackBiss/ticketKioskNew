@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="Lastik.Views.Popups.ServerErrorPopupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lastik.Views.Popups"
+             xmlns:popups="clr-namespace:Lastik.ViewModels.Popups"
+             xmlns:popupContainers="clr-namespace:Lastik.Views.Popups.PopupContainers"
+             xmlns:helpers="clr-namespace:Lastik.Helpers"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+
+             mc:Ignorable="d"
+             VerticalAlignment="Center"
+             d:DataContext="{d:DesignInstance popups:ServerErrorPopupViewModel}">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ServerErrorIcon">
+            <Viewbox>
+                <Grid>
+                    <Path
+                        Data="M96.1928 144.13C98.9041 144.13 101.178 143.211 103.016 141.374C104.853 139.536 105.768 137.265 105.762 134.56C105.762 131.849 104.843 129.578 103.006 127.747C101.169 125.916 98.8977 124.997 96.1928 124.991C93.4815 124.991 91.2104 125.91 89.3795 127.747C87.5486 129.584 86.6299 131.855 86.6235 134.56C86.6235 137.272 87.5422 139.546 89.3795 141.383C91.2168 143.22 93.4879 144.136 96.1928 144.13ZM86.6235 105.852H105.762V48.4367H86.6235V105.852ZM96.1928 191.976C82.9553 191.976 70.5153 189.462 58.8726 184.435C47.23 179.408 37.1025 172.592 28.4902 163.986C19.8778 155.373 13.0613 145.246 8.0406 133.603C3.01991 121.961 0.50638 109.521 0.5 96.2831C0.5 83.0456 3.01353 70.6056 8.0406 58.963C13.0677 47.3203 19.8842 37.1928 28.4902 28.5805C37.1025 19.9681 47.23 13.1516 58.8726 8.13093C70.5153 3.11024 82.9553 0.596712 96.1928 0.590332C109.43 0.590332 121.87 3.10386 133.513 8.13093C145.156 13.158 155.283 19.9745 163.895 28.5805C172.508 37.1928 179.328 47.3203 184.355 58.963C189.382 70.6056 191.892 83.0456 191.886 96.2831C191.886 109.521 189.372 121.961 184.345 133.603C179.318 145.246 172.501 155.373 163.895 163.986C155.283 172.598 145.156 179.418 133.513 184.445C121.87 189.472 109.43 191.982 96.1928 191.976Z"
+                        Fill="#9A8169" />
+                    <Path
+                        Data="M191.5 192.812H191.5C187.347 192.812 183.286 194.043 179.833 196.351C176.38 198.658 173.688 201.938 172.099 205.775C170.509 209.613 170.093 213.835 170.904 217.909C171.714 221.982 173.714 225.724 176.651 228.661C179.588 231.598 183.33 233.598 187.403 234.408C191.477 235.218 195.699 234.803 199.536 233.213C203.374 231.624 206.653 228.932 208.961 225.479C211.268 222.025 212.5 217.965 212.5 213.812V213.811C212.496 208.243 210.283 202.904 206.345 198.966C202.408 195.029 197.069 192.815 191.5 192.812Z"
+                        Fill="#9A8169" Opacity="0.2" Stroke="white" />
+                    <Path
+                        Data="M144.636 177.726C144.628 174.875 145.753 172.138 147.763 170.117C171.221 146.497 211.779 146.497 235.237 170.119C236.734 171.625 237.751 173.54 238.161 175.623C238.571 177.707 238.354 179.865 237.539 181.825C236.724 183.785 235.346 185.461 233.58 186.639C231.814 187.818 229.739 188.447 227.616 188.448M144.636 177.726L227.615 187.948M144.636 177.726C144.644 180.577 145.784 183.308 147.805 185.318C149.826 187.328 152.564 188.453 155.414 188.446C158.264 188.438 160.993 187.299 163.003 185.279M144.636 177.726L163.003 185.279M227.616 188.448C227.616 188.448 227.616 188.448 227.615 188.448L227.615 187.948M227.616 188.448C227.616 188.448 227.617 188.448 227.617 188.448L227.615 187.948M227.616 188.448C226.198 188.452 224.794 188.174 223.485 187.629C222.177 187.085 220.991 186.286 219.996 185.279M227.615 187.948C226.264 187.952 224.925 187.687 223.677 187.167C222.429 186.648 221.298 185.885 220.348 184.924M219.996 185.279C219.997 185.28 219.998 185.281 220 185.282L220.348 184.924M219.996 185.279C212.365 177.862 202.142 173.712 191.5 173.712C180.858 173.712 170.635 177.862 163.003 185.279M219.996 185.279C219.995 185.278 219.993 185.276 219.992 185.275L220.348 184.924M220.348 184.924L163.003 185.279"
+                        Fill="#9A8169" Opacity="0.2" Stroke="white" />
+                    <Path
+                        Data="M134.22 156.447L134.22 156.447C164.974 125.334 218.027 125.334 248.781 156.447L248.781 156.447C250.786 158.474 253.514 159.621 256.364 159.637C259.215 159.653 261.956 158.535 263.982 156.531C266.009 154.526 267.157 151.798 267.173 148.948C267.188 146.097 266.071 143.358 264.068 141.331C254.613 131.669 243.324 123.993 230.863 118.752C218.401 113.511 205.019 110.812 191.5 110.812C177.982 110.812 164.6 113.511 152.138 118.752C139.677 123.993 128.388 131.669 118.934 141.331C116.93 143.357 115.813 146.097 115.828 148.948C115.844 151.798 116.992 154.526 119.019 156.531C121.045 158.535 123.786 159.653 126.637 159.637C129.487 159.621 132.215 158.474 134.22 156.447Z"
+                        Fill="#9A8169" Opacity="0.2" Stroke="white" />
+                </Grid>
+            </Viewbox>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <popupContainers:ScaleContainer>
+        <Border
+            Width="1657"
+            Background="White"
+            CornerRadius="40"
+            Padding="367 98 367 143">
+            <StackPanel>
+                <ContentPresenter ContentTemplate="{StaticResource ServerErrorIcon}" 
+                                  Width="273"/>
+                <TextBlock Style="{StaticResource HeaderTextStyle}"
+                           Margin="0 82 0 0"
+                           TextAlignment="Center">
+                    ПОТЕРЯНО СОЕДИНЕНИЕ <LineBreak /> С ИНТЕРНЕТОМ
+                </TextBlock>
+                <TextBlock
+                    Style="{StaticResource MicroTextStyle}"
+                    TextAlignment="Center"
+                    Margin="0 16 0 0">
+                    Просим прощения <LineBreak /> за причиненные неудобства
+                </TextBlock>
+                <TextBlock
+                    Style="{StaticResource MicroTextStyle}"
+                    TextAlignment="Center"
+                    Text="Контакты администрации:"
+                    Margin="0 16 0 0">
+                </TextBlock>
+                <TextBlock helpers:RichTextBoxHelper.HtmlText="{Binding Contacts}"
+                           Style="{StaticResource DescriptionTextStyle}"
+                           FontSize="54"
+                           MaxHeight="200"
+                           Width="700"
+                           TextAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Margin="0 16 0 16"/>
+                <Button Template="{StaticResource MainButtonTemplate}"
+                        Content="НАЗАД"
+                        Height="150"
+                        FontSize="80"
+                        Command="{Binding CloseContainerCommand}" />
+            </StackPanel>
+        </Border>
+    </popupContainers:ScaleContainer>
+</UserControl>

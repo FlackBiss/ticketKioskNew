@@ -1,0 +1,104 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Fonts\BebasNeue-Bold.ttf" />
+    <None Remove="Resources\Fonts\BebasNeue-Book.ttf" />
+    <None Remove="Resources\Fonts\BebasNeue-Light.ttf" />
+    <None Remove="Resources\Fonts\BebasNeue-Regular.ttf" />
+    <None Remove="Resources\Fonts\BebasNeue-Thin.ttf" />
+    <None Remove="Resources\Fonts\Inter-Black.ttf" />
+    <None Remove="Resources\Fonts\Inter-Bold.ttf" />
+    <None Remove="Resources\Fonts\Inter-ExtraBold.ttf" />
+    <None Remove="Resources\Fonts\Inter-ExtraLight.ttf" />
+    <None Remove="Resources\Fonts\Inter-Light.ttf" />
+    <None Remove="Resources\Fonts\Inter-Medium.ttf" />
+    <None Remove="Resources\Fonts\Inter-Regular.ttf" />
+    <None Remove="Resources\Fonts\Inter-SemiBold.ttf" />
+    <None Remove="Resources\Fonts\Inter-Thin.ttf" />
+    <None Remove="Resources\Images\Card.jfif" />
+    <None Remove="Resources\Images\defaultEventImage.jpg" />
+    <None Remove="Resources\Images\hall.jfif" />
+    <None Remove="Resources\Images\redSeats.jfif" />
+    <None Remove="Resources\Images\standByBackground.jfif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Controls\TextOnPath\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
+    <PackageReference Include="Refit" Version="8.0.0" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="7.1.2" />
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CommonControls">
+      <HintPath>Libs\CommonControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Core">
+      <HintPath>Libs\Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomKeyboard">
+      <HintPath>Libs\CustomKeyboard.dll</HintPath>
+    </Reference>
+    <Reference Include="FreeKassaPayOnlineFramework">
+      <HintPath>Libs\FreeKassaPayOnlineFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MainComponents">
+      <HintPath>Libs\MainComponents.dll</HintPath>
+    </Reference>
+    <Reference Include="MapControlLib">
+      <HintPath>Libs\MapControlLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmNavigationLib">
+      <HintPath>Libs\MvvmNavigationLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\BebasNeue-Bold.ttf" />
+    <Resource Include="Resources\Fonts\BebasNeue-Book.ttf" />
+    <Resource Include="Resources\Fonts\BebasNeue-Light.ttf" />
+    <Resource Include="Resources\Fonts\BebasNeue-Regular.ttf" />
+    <Resource Include="Resources\Fonts\BebasNeue-Thin.ttf" />
+    <Resource Include="Resources\Fonts\Inter-Black.ttf" />
+    <Resource Include="Resources\Fonts\Inter-Bold.ttf" />
+    <Resource Include="Resources\Fonts\Inter-ExtraBold.ttf" />
+    <Resource Include="Resources\Fonts\Inter-ExtraLight.ttf" />
+    <Resource Include="Resources\Fonts\Inter-Light.ttf" />
+    <Resource Include="Resources\Fonts\Inter-Medium.ttf" />
+    <Resource Include="Resources\Fonts\Inter-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Inter-SemiBold.ttf" />
+    <Resource Include="Resources\Fonts\Inter-Thin.ttf" />
+    <Resource Include="Resources\Images\Card.jfif" />
+    <Resource Include="Resources\Images\defaultEventImage.jpg" />
+    <Resource Include="Resources\Images\hall.jfif" />
+    <Resource Include="Resources\Images\redSeats.jfif" />
+    <Resource Include="Resources\Images\standByBackground.jfif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+﻿<Application x:Class="Lastik.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Lastik">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MapControlLib;component/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="Resources/Storyboards.xaml"/>
+                <ResourceDictionary Source="Resources/Icons.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/TextStyles.xaml"/>
+                <ResourceDictionary Source="Resources/CommonBrushes.xaml"/>
+                <ResourceDictionary Source="Resources/CommonConverters.xaml"/>
+                <ResourceDictionary Source="Resources/Templates/ButtonTemplates.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/ScrollBarStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/CalendarStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/TextOnAPathStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/KeyboardStyles.xaml"/>
+                <ResourceDictionary Source="Resources/DataTemplates/GeometryDataTemplates.xaml"/>
+                <ResourceDictionary Source="Resources/DataTemplates/PopupDataTemplates.xaml"/>
+                <ResourceDictionary Source="/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="Resources/DataTemplates/PaymentStatesDataTemplates.xaml"/>
+                <ResourceDictionary Source="Resources/DataTemplates/EventDataTemplates.xaml"/>
+                <ResourceDictionary Source="Resources/DataTemplates/GenericDataTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

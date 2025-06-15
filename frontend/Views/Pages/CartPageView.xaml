@@ -1,0 +1,482 @@
+﻿<UserControl x:Class="Lastik.Views.Pages.CartPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lastik.Views.Pages"
+             xmlns:controls="clr-namespace:Lastik.Views.Controls"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:pages1="clr-namespace:Lastik.ViewModels.Pages"
+             xmlns:entities="clr-namespace:Lastik.Models.Schedules.Entities"
+             xmlns:popupContainers="clr-namespace:Lastik.Views.Popups.PopupContainers"
+             xmlns:components="clr-namespace:MainComponents.Components;assembly=MainComponents"
+             xmlns:helpers="clr-namespace:Lastik.Helpers"
+             xmlns:views="clr-namespace:CustomKeyboard.Views;assembly=CustomKeyboard"
+             xmlns:enums="clr-namespace:FreeKassaPayOnline.Enums;assembly=FreeKassaPayOnlineFramework"
+             mc:Ignorable="d"
+
+             Width="1996"
+             d:DataContext="{d:DesignInstance pages1:CartPageViewModel}">
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="ButtonStyle">
+            <Setter Property="Template" Value="{StaticResource MainButtonTemplate}" />
+            <Setter Property="Width" Value="508" />
+            <Setter Property="Height" Value="126" />
+            <Setter Property="FontSize" Value="36" />
+        </Style>
+        <DataTemplate DataType="{x:Type entities:Schedule}" x:Key="EventDescriptionTemplate">
+            <StackPanel>
+                <Border
+                    Background="{StaticResource SecondaryForegroundBrush}"
+                    CornerRadius="24">
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        Margin="43 25 0 19">
+                        <Border Background="{StaticResource PrimaryForegroundBrush}"
+                                HorizontalAlignment="Left">
+                            <TextBlock Style="{StaticResource DefaultTextStyle}"
+                                       Foreground="{StaticResource SecondaryForegroundBrush}"
+                                       FontSize="40"
+                                       Padding="40 15"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding DateTimeAt,StringFormat=dd.MM.yyyy  HH:mm}" />
+                        </Border>
+                        <TextBlock Style="{StaticResource HeaderTextStyle}"
+                                   Margin="0 22 0 0"
+                                   FontSize="64"
+                                   Text="{Binding Title}" />
+                    </StackPanel>
+                </Border>
+                <StackPanel>
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Hall.Name}"
+                                             Value="">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"></Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Hall.Name}"
+                                             Value="{x:Null}">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock Text="Зал"
+                               Margin="0 54 0 22"
+                               Style="{StaticResource MicroTextStyle}" />
+                    <TextBlock Style="{StaticResource HeaderTextStyle}"
+                               Text="{Binding Hall.Name}"
+                               FontSize="48" />
+                </StackPanel>
+
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction
+                Command="{Binding LoadCommand}" />
+        </b:EventTrigger>
+        <b:EventTrigger EventName="Unloaded">
+            <b:InvokeCommandAction
+                Command="{Binding UnLoadCommand}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <Grid>
+        <popupContainers:ScaleContainer>
+            <Border
+                VerticalAlignment="Center"
+                CornerRadius="40"
+                Background="White">
+                <b:Interaction.Behaviors>
+                    <helpers:AnimatedSizeChangingBehavior Duration="{StaticResource Duration}"
+                                                          AnimateHeight="True" />
+                </b:Interaction.Behaviors>
+                <StackPanel
+                    Margin="56 39 56 111">
+
+                    <TextBlock
+                        Style="{StaticResource HeaderTextStyle}"
+                        FontSize="120"
+                        Width="1884"
+                        Margin="0 0 0 104"
+                        Text="{Binding HeaderText}"
+                        TextAlignment="Center">
+                        <b:Interaction.Behaviors>
+                            <helpers:AnimatedSizeChangingBehavior Duration="{StaticResource Duration}"
+                                                                  AnimateHeight="True" />
+                        </b:Interaction.Behaviors>
+                    </TextBlock>
+                    <!--#region Корзина-->
+                    <StackPanel>
+                        <StackPanel.Style>
+                            <Style BasedOn="{StaticResource CollapsedOpacityControlStyle}" TargetType="StackPanel">
+                                <Setter Property="Opacity" Value="1" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding PaymentStage}"
+                                                 Value="{x:Static pages1:PaymentStage.Cart}">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource FadeIn}" />
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard Storyboard="{StaticResource FadeOut}" />
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <ContentPresenter Content="{Binding CartPreview}">
+                            <ContentPresenter.Style>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="ContentTemplate"
+                                            Value="{StaticResource EventDescriptionTemplate}" />
+                                </Style>
+                            </ContentPresenter.Style>
+                        </ContentPresenter>
+
+
+                        <TextBlock Text="Места"
+                                   Margin="0 42 0 15"
+                                   Style="{StaticResource MicroTextStyle}" />
+                        <Border Background="{StaticResource SecondaryForegroundBrush}"
+                                CornerRadius="24"
+                                Margin="0 0 0 54">
+                            <ScrollViewer
+                                Style="{StaticResource PrimaryScrollViewer}"
+                                Height="604"
+                                Margin="43 33">
+                                <ItemsControl ItemsSource="{Binding PlaceViewModels}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <!--#region MainStyle -->
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="0 12">
+                                                    <StackPanel.Style>
+                                                        <Style TargetType="StackPanel">
+                                                            <Setter Property="Visibility"
+                                                                Value="Collapsed"></Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding DataContext.CartPreview.TypeEnum, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                                                                         Value="SeatsByTickets">
+                                                                    <Setter Property="Visibility"
+                                                                        Value="Visible"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </StackPanel.Style>
+                                                    <ContentPresenter Content="{Binding}"/>
+                                                </StackPanel>
+                                                <!--#endregion-->
+                                                <!--#region WithIncrAndDecr -->
+                                                <Border Width="875"
+                                                        Height="156"
+                                                        HorizontalAlignment="Left"
+                                                        CornerRadius="24"
+                                                        Background="{DynamicResource PrimaryBackgroundBrush}">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Visibility"
+                                                                    Value="Visible"></Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding DataContext.CartPreview.TypeEnum, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                                                                             Value="SeatsByTickets">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <Grid Margin="0 10">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Grid.Column="0"
+                                                            Template="{StaticResource IncreaseButtonTemplate}"
+                                                            Content="{StaticResource MinusIcon}"
+                                                            Command="{Binding DataContext.DecreaseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                                                            CommandParameter="{Binding}"
+                                                            Width="100"
+                                                            Height="100">
+                                                        </Button>
+
+                                                        <TextBlock Grid.Column="1"
+                                                               Text="{Binding Name}"
+                                                               Margin="24 0"
+                                                               Style="{DynamicResource DefaultTextStyle}"
+                                                               Foreground="{DynamicResource MainFillBrush}"
+                                                               VerticalAlignment="Center"
+                                                               Width="510">
+                                                        </TextBlock>
+
+                                                        <Button Grid.Column="2"
+                                                            Template="{StaticResource IncreaseButtonTemplate}"
+                                                            Content="{StaticResource PlusIcon}"
+                                                            Command="{Binding DataContext.IncreaseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                                                            CommandParameter="{Binding}"
+                                                            Width="100"
+                                                            Height="100">
+                                                        </Button>
+                                                    </Grid>
+                                                </Border>
+                                                <TextBlock Margin="76 0 0 0" 
+                                                           FontSize="48"
+                                                           VerticalAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style BasedOn="{StaticResource HeaderTextStyle}"
+                                                               TargetType="TextBlock">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0} ₽ × {1}">
+                                                                        <Binding Path="Price" Mode="TwoWay"/>
+                                                                        <Binding Path="Count" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Count}"
+                                                                             Value="{x:Null}">
+                                                                    <Setter Property="Text"
+                                                                            Value="{Binding Price, StringFormat='{}{0} ₽',ConverterCulture=Ru-ru}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <!--#endregion-->
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Border>
+                        <TextBlock Style="{StaticResource DefaultTextStyle}"
+                                   FontSize="40"
+                                   Margin="0 54 0 0"
+                                   Foreground="{StaticResource MicroForegroundBrush}"
+                                   Width="900"
+                                   HorizontalAlignment="Left">
+                            <Run Text="По вопросам работы сервиса обращайтесь по телефону" />
+                            <Run Text="+7 (495) 120-42-64"
+                                 FontWeight="Bold"
+                                 Foreground="{StaticResource MainFillBrush}" />
+                            <Run Text="или пишите по адресу" />
+                            <Run Text=" support@zapomni.ru"
+                                 FontWeight="Bold"
+                                 Foreground="{StaticResource MainFillBrush}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <!--#endregion-->
+
+                    <!--#region Форма-->
+                    <controls:UserFormView
+                        DataContext="{Binding UserForm}"
+                        HorizontalAlignment="Center">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="GotKeyboardFocus">
+                                <b:InvokeCommandAction
+                                    Command="{Binding DataContext.GotFocusCommand,RelativeSource={RelativeSource FindAncestor,AncestorType=local:CartPageView}}"
+                                    PassEventArgsToCommand="True" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <controls:UserFormView.Style>
+                            <Style BasedOn="{StaticResource CollapsedOpacityControlStyle}"
+                                   TargetType="controls:UserFormView">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding DataContext.PaymentStage,RelativeSource={RelativeSource FindAncestor,AncestorType=local:CartPageView}}"
+                                        Value="{x:Static pages1:PaymentStage.UserData}">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource FadeIn}" />
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard Storyboard="{StaticResource FadeOut}" />
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </controls:UserFormView.Style>
+                    </controls:UserFormView>
+                    <!--#endregion-->
+
+                    <!--<controls:Clock
+                        HorizontalAlignment="Center"
+                        Margin="0 104 0 57"
+                        RemainingTime="{Binding RemainingTime}" />-->
+
+                    <TextBlock HorizontalAlignment="Center"
+                               Margin="0 16"
+                               Style="{StaticResource HeaderTextStyle}"
+                               FontSize="90"
+                               TextAlignment="Center"
+                               TextTrimming="WordEllipsis" >
+                        <Run Text="К ОПЛАТЕ"></Run>
+                        <Run Text="{Binding TotalPrice, StringFormat=C0, ConverterCulture=ru-Ru, Mode=OneWay}"/>
+                    </TextBlock>
+
+
+                    <!--#region Кнопки навигации-->
+                    <StackPanel HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style x:Key="ForwardButton" TargetType="Button">
+                                <Setter Property="Width" Value="923" />
+                                <Setter Property="Opacity" Value="1" />
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ButtonBase">
+                                            <Border CornerRadius="12"
+                                                    Background="{StaticResource MainFillBrush}"
+                                                    Width="{TemplateBinding Width}"
+                                                    Height="{TemplateBinding Height}">
+                                                <TextBlock Style="{StaticResource ButtonTextStyle}"
+                                                           FontSize="80"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Text="{TemplateBinding Content}"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="Opacity" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource FadeOut}"/>
+                                            <BeginStoryboard>
+                                                <BeginStoryboard.Storyboard>
+                                                    <Storyboard
+                                                        TargetProperty="Width">
+                                                        <DoubleAnimation
+                                                            BeginTime="0:0:0"
+                                                            Duration="{StaticResource Duration}"
+                                                            EasingFunction="{StaticResource Ease}"
+                                                            To="0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard.Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
+                                            <BeginStoryboard>
+                                                <BeginStoryboard.Storyboard>
+                                                    <Storyboard
+                                                        TargetProperty="Width">
+                                                        <DoubleAnimation
+                                                            Duration="{StaticResource Duration}"
+                                                            EasingFunction="{StaticResource Ease}"
+                                                            To="923"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard.Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Template="{StaticResource AlterButtonTemplate}"
+                                Content="НАЗАД"
+                                Command="{Binding GoBackCommand}"
+                                FontSize="80"
+                                Height="166"
+                                Width="923" />
+                        <StackPanel>
+                            <Button
+                                Margin="15 0 0 0"
+                                Height="166"
+                                Content="{Binding ForwardButtonText}"
+                                Command="{Binding GoForwardCommand}"
+                                CommandParameter="{x:Static enums:PaymentType.Sberbank}"
+                                Style="{StaticResource ForwardButton}">
+                            </Button>
+                            <Button
+                                Margin="15 15 0 0"
+                                Height="166"
+                                Content="ОПЛАТИТЬ НАЛИЧНЫМИ"
+                                Command="{Binding GoForwardCommand}"
+                                CommandParameter="{x:Static enums:PaymentType.CashValidator}">
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource ForwardButton}"
+                                           TargetType="Button">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PaymentStage}"
+                                                         Value="UserData">
+                                                <Setter Property="Visibility"
+                                                        Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </StackPanel>
+                        
+
+                    </StackPanel>
+                    <!--#endregion-->
+                </StackPanel>
+
+            </Border>
+        </popupContainers:ScaleContainer>
+        <!--#region Клавиатура-->
+        <Border
+            Background="{StaticResource PrimaryBackgroundBrush}"
+            VerticalAlignment="Bottom"
+            Padding="40"
+            Margin="0 0 0 20"
+            CornerRadius="24">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Opacity" Value="0" />
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <Trigger Property="Opacity" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsKeyboardOpen}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard
+                                        TargetProperty="Opacity">
+                                        <DoubleAnimation
+                                            To="1"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard
+                                        TargetProperty="Opacity">
+                                        <DoubleAnimation
+                                            To="0"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <StackPanel>
+                <Viewbox
+                    Margin="80 82 80 86">
+                    <views:KeyboardControl />
+                </Viewbox>
+                <Button Command="{Binding CloseKeyboardCommand}"
+                        Content="Закрыть"
+                        Style="{StaticResource ButtonStyle}" />
+            </StackPanel>
+        </Border>
+        <!--#endregion-->
+    </Grid>
+</UserControl>

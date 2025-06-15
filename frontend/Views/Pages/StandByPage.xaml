@@ -1,0 +1,149 @@
+﻿<UserControl x:Class="Lastik.Views.Pages.StandByPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:pages="clr-namespace:Lastik.ViewModels.Pages"
+             mc:Ignorable="d"
+             Width="2160"
+             Height="3840"
+             d:DataContext="{d:DesignInstance pages:StandByPageViewModel}">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+        </b:EventTrigger>
+        <b:EventTrigger EventName="Unloaded">
+            <b:InvokeCommandAction Command="{Binding UnloadedCommand}"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <Grid Background="Transparent">
+        <b:Interaction.Triggers>
+            <b:EventTrigger EventName="MouseDown">
+                <b:InvokeCommandAction Command="{Binding CloseCommand}"/>
+            </b:EventTrigger>
+        </b:Interaction.Triggers>
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="../../Resources/Images/standByBackground.jfif"
+                            Stretch="UniformToFill"/>
+            </Grid.Background>
+            <StackPanel
+                Margin="0 244 0 0"
+                Width="472"
+                VerticalAlignment="Top">
+                <ContentPresenter ContentTemplate="{StaticResource ConservatoryLogoIcon}"
+                                  Margin="0 0 0 110"/>
+                <ContentPresenter ContentTemplate="{StaticResource LogoIcon}"/>
+            </StackPanel>
+            <MediaElement Source="{Binding Media1}"
+                          Stretch="Uniform"
+                          RenderOptions.BitmapScalingMode="HighQuality"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                <MediaElement.Style>
+                    <Style TargetType="MediaElement">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <TranslateTransform X="2160"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SwitchMedia}"
+                                         Value="True">
+                               
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                            <DoubleAnimation To="0"
+                                                             BeginTime="{StaticResource SwitchBeginTime}"
+                                                             Duration="{StaticResource Duration}"
+                                                             EasingFunction="{StaticResource PowerEase}"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                            <DoubleAnimation To="-2160"
+                                                             BeginTime="{StaticResource SwitchBeginTime}"
+                                                             Duration="{StaticResource Duration}"
+                                                             EasingFunction="{StaticResource PowerEase}"/>
+                                            <DoubleAnimation To="2160"
+                                                             BeginTime="{StaticResource BeginTime2}"
+                                                             Duration="{StaticResource ZeroDuration}"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </MediaElement.Style>
+            </MediaElement>
+            <MediaElement Source="{Binding Media2}"
+                          Stretch="Uniform"
+                          RenderOptions.BitmapScalingMode="HighQuality"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                <MediaElement.Style>
+                    <Style TargetType="MediaElement">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <TranslateTransform X="0"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SwitchMedia}"
+                                         Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                            <DoubleAnimation To="-2160"
+                                                             BeginTime="{StaticResource SwitchBeginTime}"
+                                                             Duration="{StaticResource Duration}"
+                                                             EasingFunction="{StaticResource PowerEase}"/>
+                                            <DoubleAnimation To="2160"
+                                                             BeginTime="{StaticResource BeginTime2}"
+                                                             Duration="{StaticResource ZeroDuration}"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                   
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                            <DoubleAnimation To="0"
+                                                             BeginTime="{StaticResource SwitchBeginTime}"
+                                                             Duration="{StaticResource Duration}"
+                                                             EasingFunction="{StaticResource PowerEase}"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </MediaElement.Style>
+            </MediaElement>
+            <Button
+                Width="1513"
+                Height="278"
+                Command="{Binding CloseCommand}"
+                Margin="0 0 0 312"
+                VerticalAlignment="Bottom">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            CornerRadius="24"
+                            Background="{StaticResource SecondaryForegroundBrush}">
+                            <TextBlock Text="ВЫБРАТЬ БИЛЕТ"
+                                       Style="{StaticResource HeaderTextStyle}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontSize="100"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

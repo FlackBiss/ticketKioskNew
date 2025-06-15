@@ -1,0 +1,200 @@
+﻿<UserControl x:Class="Lastik.Views.Pages.EventDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lastik.Views.Pages"
+             xmlns:pages="clr-namespace:Lastik.ViewModels.Pages"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:controls1="clr-namespace:Lastik.Views.Controls"
+             xmlns:helpers="clr-namespace:Lastik.Helpers"
+             mc:Ignorable="d"
+             Height="3840" Width="2160"
+             d:DataContext="{d:DesignInstance pages:EventDetailsViewModel}"
+             Style="{StaticResource FadeLoadControlStyle}">
+    <UserControl.Resources>
+        <Style TargetType="Ellipse" x:Key="EllipseSeparatorStyle">
+            <Setter Property="Width" Value="8" />
+            <Setter Property="Height" Value="8" />
+            <Setter Property="Margin" Value="20 0" />
+            <Setter Property="Fill" Value="{StaticResource ThirdForegroundBrush}" />
+        </Style>
+        <Style TargetType="TextBlock" x:Key="AdditionalDescriptionTextStyle"
+               BasedOn="{StaticResource DefaultTextStyle}">
+            <Setter Property="MaxWidth" Value="2000" />
+            <Setter Property="FontSize" Value="54" />
+            <Setter Property="Foreground" Value="{StaticResource ThirdForegroundBrush}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="0 55 0 322">
+        <StackPanel>
+            <Grid Height="1068">
+                <Border Background="LightGray"
+                        CornerRadius="40" />
+                <Border
+                    CornerRadius="40">
+                    <Border.Background>
+                        <ImageBrush
+                            ImageSource="{Binding Event.ImagePath,FallbackValue={StaticResource DefaultEventImage},
+                     TargetNullValue={StaticResource DefaultEventImage},
+                     Converter={StaticResource ImageConverter}}"
+                            Stretch="Uniform" />
+                    </Border.Background>
+                </Border>
+            </Grid>
+            <Grid Margin="68 0"
+                  Height="2300">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0 80 0 32">
+                    <Border
+                        Background="White"
+                        Padding="40 16"
+                        CornerRadius="49">
+                        <TextBlock Text="{Binding Event.DateTimeAt,StringFormat=dd.MM.yyyy}"
+                                   Style="{StaticResource DefaultTextStyle}"
+                                   FontSize="54"
+                                   Foreground="{StaticResource MainFillBrush}" />
+                    </Border>
+
+                    <Border
+                        Background="White"
+                        Padding="40 16"
+                        Margin="32 0 0 0"
+                        CornerRadius="49">
+                        <TextBlock Text="{Binding Event.DateTimeAt,StringFormat=HH:mm}"
+                                   Style="{StaticResource DefaultTextStyle}"
+                                   FontSize="54"
+                                   Foreground="{StaticResource MainFillBrush}" />
+                    </Border>
+                </StackPanel>
+
+                <TextBlock Grid.Row="1"
+                           Text="{Binding Event.Title}"
+                           HorizontalAlignment="Center"
+                           Height="240"
+                           Margin="0 0 0 24"
+                           Style="{StaticResource HeaderTextStyle}"
+                           FontSize="90"
+                           TextAlignment="Center"
+                           TextTrimming="WordEllipsis" />
+                <TextBlock Grid.Row="2"
+                           Visibility="{Binding Event.IsHaveTickets, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           TextAlignment="Center"
+                           Style="{StaticResource AdditionalDescriptionTextStyle}">
+                    <Run Text="{Binding Event.Hall.Name, StringFormat='{}{0} &#x2022;',  Mode=OneWay}" />
+                    <Run Text="{Binding EventDuration,Mode=OneWay}" />
+                    <Run Text="&#x2022;" />
+                    <Run Text="{Binding Event.Age,Mode=OneWay}" />
+                </TextBlock>
+                <ScrollViewer Grid.Row="3"
+                              Style="{StaticResource PrimaryScrollViewer}"
+                              Margin="0 80"
+                              HorizontalScrollBarVisibility="Hidden">
+                    <StackPanel>
+                        <TextBlock helpers:RichTextBoxHelper.HtmlText="{Binding Event.Description}"
+                                   Style="{StaticResource DescriptionTextStyle}"
+                                   FontSize="54"
+                                   Width="1950"
+                                   HorizontalAlignment="Left" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <TextBlock Text="{Binding Item.PlacesHave, StringFormat='{}Доступно билетов: {0} • '}"
+                           Foreground="{StaticResource ThirdForegroundBrush}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Item.PlacesHave}"
+                                             Value="{x:Null}">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <TextBlock Grid.Row="4"
+                           Visibility="{Binding Event.IsHaveTickets, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           HorizontalAlignment="Center"
+                           Margin="0 0 0 40"
+                           Style="{StaticResource HeaderTextStyle}"
+                           FontSize="90">
+                    <Run>
+                        <Run.Style>
+                            <Style TargetType="Run">
+                                <Setter Property="Text"
+                                        Value="{Binding Event.PlacesHave, StringFormat='{}Доступно {0} билетов'}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Event.PlacesHave}"
+                                                 Value="{x:Null}">
+                                        <Setter Property="Text"
+                                                Value="Билеты">
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Run.Style>
+                    </Run>
+                    <Run Text="от" />
+                    <Run Text="{Binding Event.StartPrice, StringFormat=C0,ConverterCulture=ru-Ru}" />
+                </TextBlock>
+
+                <StackPanel Grid.Row="5" VerticalAlignment="Bottom"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0 0 0 210">
+                    <Button
+                        Template="{StaticResource AlterButtonTemplate}"
+                        Content="НАЗАД"
+                        Command="{Binding GoBackCommand}"
+                        FontSize="80"
+                        Height="166"
+                        Width="923" />
+                    <Button
+                        Visibility="{Binding Event.IsHaveTickets, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Margin="15 0 0 0"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Content="КУПИТЬ БИЛЕТ"
+                        Command="{Binding ToPlaceSelectionCommand}"
+                        FontSize="80"
+                        Height="166"
+                        Width="923">
+                    </Button>
+                    <Button
+                        Margin="15 0 0 0"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Content="ПЕРЕЙТИ К МЕРОПРИЯТИЮ"
+                        Command="{Binding ToEventDetailsCommand}"
+                        FontSize="80"
+                        Height="166"
+                        Width="923">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Event.Event}"
+                                                 Value="{x:Null}">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

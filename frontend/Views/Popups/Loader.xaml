@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Lastik.Views.Popups.Loader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Lastik.Views.Popups"
+             xmlns:popupContainers="clr-namespace:Lastik.Views.Popups.PopupContainers"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:popups="clr-namespace:Lastik.ViewModels.Popups"
+             mc:Ignorable="d" 
+             Width="300"
+             Height="300"
+             d:DataContext="{d:DesignInstance popups:LoaderViewModel}">
+    <b:Interaction.Triggers>
+        <b:DataTrigger Binding="{Binding ToClose}" Value="True">
+            <b:CallMethodAction
+                TargetObject="{Binding ElementName=Container}" MethodName="Close"/>
+        </b:DataTrigger>
+    </b:Interaction.Triggers>
+    <popupContainers:ScaleContainer
+        x:Name="Container">
+        <b:Interaction.Triggers>
+            <b:EventTrigger EventName="Closed">
+                <b:InvokeCommandAction Command="{Binding CloseCommand}"/>
+            </b:EventTrigger>
+        </b:Interaction.Triggers>
+        <Viewbox>
+            <Grid>
+                <Path Data="M229 0.666626C222.945 0.666626 217.137 3.07227 212.855 7.35435C208.573 11.6364 206.167 17.4442 206.167 23.5V69.1666C206.167 75.2224 208.573 81.0302 212.855 85.3122C217.137 89.5943 222.945 92 229 92C235.056 92 240.864 89.5943 245.146 85.3122C249.428 81.0302 251.834 75.2224 251.834 69.1666V23.5C251.834 17.4442 249.428 11.6364 245.146 7.35435C240.864 3.07227 235.056 0.666626 229 0.666626ZM434.5 206.167H388.834C382.778 206.167 376.97 208.572 372.688 212.854C368.406 217.136 366 222.944 366 229C366 235.056 368.406 240.863 372.688 245.146C376.97 249.428 382.778 251.833 388.834 251.833H434.5C440.556 251.833 446.364 249.428 450.646 245.146C454.928 240.863 457.334 235.056 457.334 229C457.334 222.944 454.928 217.136 450.646 212.854C446.364 208.572 440.556 206.167 434.5 206.167ZM92.0003 229C92.0003 222.944 89.5947 217.136 85.3126 212.854C81.0305 208.572 75.2228 206.167 69.167 206.167H23.5003C17.4445 206.167 11.6368 208.572 7.35472 212.854C3.07264 217.136 0.666992 222.944 0.666992 229C0.666992 235.056 3.07264 240.863 7.35472 245.146C11.6368 249.428 17.4445 251.833 23.5003 251.833H69.167C75.2228 251.833 81.0305 249.428 85.3126 245.146C89.5947 240.863 92.0003 235.056 92.0003 229ZM97.0237 69.1666C92.5727 64.9579 86.632 62.6896 80.5087 62.8609C74.3853 63.0322 68.5808 65.629 64.372 70.08C60.1632 74.531 57.895 80.4716 58.0663 86.5949C58.2376 92.7183 60.8343 98.5229 65.2853 102.732L98.1653 134.47C100.372 136.601 102.985 138.265 105.849 139.363C108.713 140.462 111.768 140.972 114.834 140.863C117.909 140.852 120.951 140.219 123.776 139.002C126.601 137.786 129.151 136.011 131.274 133.785C135.526 129.507 137.913 123.72 137.913 117.687C137.913 111.655 135.526 105.868 131.274 101.59L97.0237 69.1666ZM343.167 140.863C349.046 140.84 354.689 138.55 358.922 134.47L391.802 102.732C395.813 98.5406 398.079 92.98 398.138 87.1791C398.198 81.3783 396.047 75.7722 392.124 71.4995C388.2 67.2268 382.796 64.6078 377.012 64.1745C371.227 63.7412 365.494 65.5261 360.977 69.1666L328.097 101.59C323.844 105.868 321.457 111.655 321.457 117.687C321.457 123.72 323.844 129.507 328.097 133.785C332.05 137.957 337.432 140.485 343.167 140.863ZM229 366C222.945 366 217.137 368.406 212.855 372.688C208.573 376.97 206.167 382.778 206.167 388.833V434.5C206.167 440.556 208.573 446.364 212.855 450.646C217.137 454.928 222.945 457.333 229 457.333C235.056 457.333 240.864 454.928 245.146 450.646C249.428 446.364 251.834 440.556 251.834 434.5V388.833C251.834 382.778 249.428 376.97 245.146 372.688C240.864 368.406 235.056 366 229 366ZM359.835 323.53C355.475 319.321 349.622 317.017 343.563 317.124C337.503 317.231 331.735 319.741 327.526 324.101C323.317 328.461 321.013 334.314 321.12 340.374C321.227 346.433 323.737 352.201 328.097 356.41L360.977 388.833C365.21 392.913 370.853 395.203 376.732 395.227C379.791 395.245 382.823 394.647 385.647 393.471C388.472 392.294 391.03 390.562 393.172 388.377C395.312 386.254 397.011 383.729 398.17 380.946C399.329 378.164 399.926 375.179 399.926 372.165C399.926 369.151 399.329 366.166 398.17 363.384C397.011 360.601 395.312 358.076 393.172 355.953L359.835 323.53ZM98.1653 323.53L65.2853 355.268C63.1452 357.391 61.4465 359.916 60.2873 362.699C59.1281 365.481 58.5313 368.466 58.5313 371.48C58.5313 374.494 59.1281 377.479 60.2873 380.261C61.4465 383.044 63.1452 385.569 65.2853 387.692C67.4269 389.877 69.9858 391.609 72.8099 392.786C75.6341 393.962 78.6659 394.56 81.7253 394.542C87.3541 394.59 92.8022 392.557 97.0237 388.833L129.904 357.095C134.264 352.886 136.773 347.118 136.881 341.059C136.988 334.999 134.683 329.146 130.474 324.786C126.266 320.426 120.497 317.916 114.438 317.809C108.379 317.702 102.525 320.006 98.1653 324.215V323.53Z" 
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  RenderTransformOrigin="0.5 0.5">
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="0"/>
+                    </Path.RenderTransform>
+                    <Path.Fill>
+                        <RadialGradientBrush Center="0 0" RadiusX="1" RadiusY="1">
+                            <GradientStop Color="#654138"/>
+                            <GradientStop Offset="1" Color="#654138"/>
+                        </RadialGradientBrush>
+                    </Path.Fill>
+                    <Path.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(RotateTransform.Angle)"
+                                                     Duration="0:0:2"
+                                                     RepeatBehavior="Forever"
+                                                     By="360">
+                                        <DoubleAnimation.EasingFunction>
+                                            <PowerEase Power="2"
+                                                       EasingMode="EaseInOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Path.Triggers>
+                </Path>
+            </Grid>
+        </Viewbox>
+    </popupContainers:ScaleContainer>
+</UserControl>

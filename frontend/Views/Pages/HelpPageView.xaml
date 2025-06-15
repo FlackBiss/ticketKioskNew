@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Lastik.Views.Pages.HelpPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lastik.Views.Pages"
+             xmlns:helpers="clr-namespace:Lastik.Helpers"
+             xmlns:pages="clr-namespace:Lastik.ViewModels.Pages"
+             xmlns:controls="clr-namespace:Lastik.ViewModels.Controls"
+             mc:Ignorable="d"
+             Height="2683" Width="2160"
+             d:DataContext="{d:DesignInstance controls:HelpViewModel}"
+             Style="{StaticResource FadeLoadControlStyle}">
+
+    <Grid Margin="0 0 206 0">
+        <StackPanel>
+            <Grid Height="1068">
+                <Border Background="LightGray"
+                        CornerRadius="40" />
+                <Border
+                    CornerRadius="40">
+                    <Border.Background>
+                        <ImageBrush
+                            ImageSource="{Binding Item.ImagePath, FallbackValue={StaticResource DefaultEventImage},
+                  TargetNullValue={StaticResource DefaultEventImage},
+                  Converter={StaticResource ImageConverter}}"
+                            Stretch="Uniform" />
+                    </Border.Background>
+                </Border>
+            </Grid>
+            <Grid>
+                <ScrollViewer Style="{StaticResource PrimaryScrollViewer}"
+                              Margin="0 80"
+                              HorizontalScrollBarVisibility="Hidden"
+                              Height="1500">
+                    <StackPanel>
+                        <TextBlock helpers:RichTextBoxHelper.HtmlText="{Binding Item.Description}"
+                                   Style="{StaticResource DescriptionTextStyle}"
+                                   FontSize="54"
+                                   Width="1850"
+                                   HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
